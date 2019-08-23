@@ -78,12 +78,22 @@ public class AdminService {
         return new ResponseEntity<>(new ApiResponse(false, "You don't have permission to edit article position!"), HttpStatus.UNAUTHORIZED);
     }
 
-    public ResponseEntity<?> enableComment(Long id, boolean authorised){
+    public ResponseEntity<?> getAllUnAuthorisedComments(int page, int size){
+        validatePageNumberAndSize(page, size);
+
+        Pageable pageable = PageRequest.of(page, size, Sort.Direction.DESC, "createdAt");
+
+        return new ResponseEntity<>(commentRepository.findByAuthorisedIsFalse(pageable), HttpStatus.OK);
+    }
+
+    public ResponseEntity<?> authoriseComment(Long id, boolean authorised){
 
         Comment comment = commentRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Comment", "id", id));
         comment.setAuthorised(authorised);
         return new ResponseEntity<>(commentRepository.save(comment), HttpStatus.OK);
     }
+
+
 
     private void validatePageNumberAndSize(int page, int size) {
         if(page < 0) {

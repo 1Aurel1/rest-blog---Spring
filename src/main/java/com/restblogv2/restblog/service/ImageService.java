@@ -4,14 +4,13 @@ import com.restblogv2.restblog.exeption.BadRequestException;
 import com.restblogv2.restblog.exeption.ResourceNotFoundException;
 import com.restblogv2.restblog.model.image.Image;
 import com.restblogv2.restblog.model.role.RoleName;
-import com.restblogv2.restblog.model.user.User;
 import com.restblogv2.restblog.payload.ApiResponse;
 import com.restblogv2.restblog.payload.ImageUpdate;
 import com.restblogv2.restblog.repository.ImageRepository;
 import com.restblogv2.restblog.repository.UserRepository;
 import com.restblogv2.restblog.security.UserPrincipal;
 import com.restblogv2.restblog.util.AppConstants;
-import com.restblogv2.restblog.util.FileStorage;
+import com.restblogv2.restblog.util.ImageProcessioning;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -22,8 +21,10 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+
 @Service
-public class ImageService extends FileStorage {
+public class ImageService extends ImageProcessioning {
 
     private final ImageRepository imageRepository;
     private final UserRepository userRepository;
@@ -57,7 +58,11 @@ public class ImageService extends FileStorage {
         image = imageRepository.save(image);
         String childPath = Image.getBaseStoragePath() + image.getId();
 
-        image.setUrl(storeFile(file, childPath));
+        try {
+            image.setUrl(proccessImage(file, childPath));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         return new ResponseEntity<>(imageRepository.save(image), HttpStatus.OK);
     }

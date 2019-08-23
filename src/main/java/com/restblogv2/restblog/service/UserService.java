@@ -1,7 +1,9 @@
 package com.restblogv2.restblog.service;
 
 import com.restblogv2.restblog.exeption.AppException;
+import com.restblogv2.restblog.exeption.BadRequestException;
 import com.restblogv2.restblog.exeption.ResourceNotFoundException;
+import com.restblogv2.restblog.model.article.Article;
 import com.restblogv2.restblog.model.role.Role;
 import com.restblogv2.restblog.model.role.RoleName;
 import com.restblogv2.restblog.model.user.Address;
@@ -13,10 +15,16 @@ import com.restblogv2.restblog.payload.auth.InfoRequest;
 import com.restblogv2.restblog.payload.user.UserIdentityAvailability;
 import com.restblogv2.restblog.payload.user.UserProfile;
 import com.restblogv2.restblog.payload.user.UserSummary;
+import com.restblogv2.restblog.repository.ArticleRepository;
 import com.restblogv2.restblog.repository.RoleRepository;
 import com.restblogv2.restblog.repository.UserRepository;
 import com.restblogv2.restblog.security.UserPrincipal;
+import com.restblogv2.restblog.util.AppConstants;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -24,6 +32,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -31,12 +40,14 @@ public class UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
+    private final ArticleRepository articleRepository;
 
     @Autowired
-    public UserService(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder, ArticleRepository articleRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
+        this.articleRepository = articleRepository;
     }
 
     public UserSummary getCurrentUser(UserPrincipal currentUser){
@@ -147,5 +158,32 @@ public class UserService {
             return new ResponseEntity<>(userProfile, HttpStatus.OK);
         }
         return new ResponseEntity<>(new ApiResponse(false, "You don't have permission to update users profile"), HttpStatus.OK);
+    }
+    public PagedResponse<Article> getUserArticles(String username, Integer page, Integer size) {
+        validatePageNumberAndSize(page, size);
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
+        Pageable pageable = PageRequest.of(page, size, Sort.Direction.DESC, "createdAt");
+        Page<Article> articles = articleRepository.findByCreatedBy(user.getId(), pageable);
+
+        if(articles.getNumberOfElements() == 0){
+            return new PagedResponse<>(Collections.emptyList(), articles.getNumber(), articles.getSize(), articles.getTotalElements(), articles.getTotalPages(), articles.isLast());
+        }
+        return new PagedResponse<>(articles.getContent(), articles.getNumber(), articles.getSize(), articles.getTotalElements(), articles.getTotalPages(), articles.isLast());
+    }
+
+
+
+    private void validatePageNumberAndSize(int page, int size) {
+        if(page < 0) {
+            throw new BadRequestException("Page number cannot be less than zero.");
+        }
+
+        if(size < 0) {
+            throw new BadRequestException("Size number cannot be less than zero.");
+        }
+
+        if(size > AppConstants.MAX_PAGE_SIZE) {
+            throw new BadRequestException("Page size must not be greater than " + AppConstants.MAX_PAGE_SIZE);
+        }
     }
 }

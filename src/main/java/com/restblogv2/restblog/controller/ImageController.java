@@ -45,8 +45,8 @@ public class ImageController {
     @PostMapping("")
     public ResponseEntity<?> postImage(
             @RequestParam("file") MultipartFile file,
-            @RequestParam("alt") String alt,
-            @RequestParam("description") String description,
+            @RequestParam(name="alt",required = false) String alt,
+            @RequestParam(name="description",required = false) String description,
             @CurrentUser UserPrincipal currentUser
             ){
 

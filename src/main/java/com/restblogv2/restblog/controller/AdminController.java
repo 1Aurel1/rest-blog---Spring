@@ -54,12 +54,20 @@ public class AdminController {
         return adminService.updateArticlesPositions(articlesPositionsDto, currentUser);
     }
 
+    @GetMapping("/comments")
+    public ResponseEntity<?> getAllUnAuthorisedComments(
+            @RequestParam(value = "page", required = false, defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) Integer page,
+            @RequestParam(value = "size", required = false, defaultValue = AppConstants.DEFAULT_PAGE_SIZE) Integer size
+    ){
+        return adminService.getAllUnAuthorisedComments(page, size);
+    }
+
     @PutMapping("/comments/{id}/changeStatus")
     public ResponseEntity<?> changeCommentStatus(
             @PathVariable("id") Long id,
             @RequestParam("authorised") boolean authorised
         ){
-        return adminService.enableComment(id, authorised);
+        return adminService.authoriseComment(id, authorised);
     }
 
 

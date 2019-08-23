@@ -126,12 +126,14 @@ public class ArticleService {
         List<CommentDto> commentDtos = new ArrayList<>();
 
         for(Comment comment : article.getComments()){
-            CommentDto commentDto = new CommentDto();
-            commentDto.setId(comment.getId());
-            commentDto.setBody(comment.getBody());
-            commentDto.setUserId(comment.getUser().getId());
-            commentDto.setUsername(comment.getUser().getUsername());
-            commentDtos.add(commentDto);
+            if (comment.isAuthorised()) {
+                CommentDto commentDto = new CommentDto();
+                commentDto.setId(comment.getId());
+                commentDto.setBody(comment.getBody());
+                commentDto.setUserId(comment.getUser().getId());
+                commentDto.setUsername(comment.getUser().getUsername());
+                commentDtos.add(commentDto);
+            }
         }
 
         Map<String, Object> respose = new HashMap<>();

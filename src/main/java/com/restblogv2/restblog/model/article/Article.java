@@ -31,8 +31,7 @@ public class Article extends UserDateAudit implements Serializable {
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
     @Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
-private long id;
+    private long id;
 
     @Column(unique = true)
     @NotBlank
