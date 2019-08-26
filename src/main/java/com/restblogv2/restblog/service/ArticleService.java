@@ -116,6 +116,10 @@ public class ArticleService {
 
     public ResponseEntity<?> addArticle(Article article, UserPrincipal currentUser){
         User user = userRepository.findById(currentUser.getId()).orElseThrow(() -> new ResourceNotFoundException("User", "id", 1L));
+
+        if(article.getScheduledAt() == null)
+            article.setEnabled(true);
+
         article.setUser(user);
         Article newArticle =  articleRepository.save(article);
         return new ResponseEntity<>(newArticle, HttpStatus.CREATED);

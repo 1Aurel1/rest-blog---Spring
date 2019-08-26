@@ -37,7 +37,7 @@ public class SiteConfService {
 
     public ResponseEntity<?> getAllSiteConfs(int page, int size){
         validatePageNumberAndSize(page, size);
-        Pageable pageable = PageRequest.of(page, size, Sort.Direction.DESC, "createdAt");
+        Pageable pageable = PageRequest.of(page, size);
 
         return new ResponseEntity<>(siteRepository.findAll(pageable), HttpStatus.OK);
     }

@@ -7,14 +7,13 @@ import com.restblogv2.restblog.model.audit.DateAudit;
 import com.restblogv2.restblog.model.comment.Comment;
 import com.restblogv2.restblog.model.reactions.Reaction;
 import com.restblogv2.restblog.model.role.Role;
+import com.restblogv2.restblog.validation.PhoneNumber;
 import com.sun.org.apache.regexp.internal.RE;
 import lombok.*;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.util.List;
 
 @Entity
@@ -68,7 +67,11 @@ public class User extends DateAudit {
     @JoinColumn(name = "address_id")
     private Address address;
 
+
     @Column(name = "phone")
+    @PhoneNumber
+    @Min(value = 10)
+    @Max(value = 10)
     private String phone;
 
     @Column(name = "website")
