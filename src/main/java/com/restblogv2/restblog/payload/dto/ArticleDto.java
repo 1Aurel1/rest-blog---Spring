@@ -1,4 +1,4 @@
-package com.restblogv2.restblog.dto;
+package com.restblogv2.restblog.payload.dto;
 
 import com.restblogv2.restblog.model.audit.DateAudit;
 import com.restblogv2.restblog.model.image.Image;

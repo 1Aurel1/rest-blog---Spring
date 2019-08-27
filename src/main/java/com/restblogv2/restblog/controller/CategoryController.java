@@ -1,6 +1,6 @@
 package com.restblogv2.restblog.controller;
 
-import com.restblogv2.restblog.dto.CategoryDto;
+import com.restblogv2.restblog.payload.dto.CategoryDto;
 import com.restblogv2.restblog.security.CurrentUser;
 import com.restblogv2.restblog.security.UserPrincipal;
 import com.restblogv2.restblog.service.CategoryService;
@@ -11,7 +11,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/categories")

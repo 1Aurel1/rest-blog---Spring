@@ -38,22 +38,26 @@ public class User extends DateAudit {
     @NotBlank
     @Column(name = "first_name")
     @Size(max = 40)
+    @Pattern(regexp = "^[a-zA-Z]+([',. -])*$",message = "Please enter a valid firsname")
     private String firstName;
 
     @NotBlank
     @Column(name = "last_name")
     @Size(max = 40)
+    @Pattern(regexp = "^[a-zA-Z]+([',. -])*$", message = "Please enter a valid surname")
     private String lastName;
 
     @NotBlank
     @Column(name = "username")
     @Size(max = 15)
+    @Pattern(regexp = "^[a-z0-9_-]{3,15}$", message = "Username is invalid")
     private String username;
 
     @NotBlank
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Size(max = 100)
     @Column(name = "password")
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[#$^+=!*()@%&]).{8,10}$", message = "Password must contain a capital letter, a small letter, a number and a special caracter!")
     private String password;
 
     @NotBlank
@@ -69,12 +73,11 @@ public class User extends DateAudit {
 
 
     @Column(name = "phone")
-    @PhoneNumber
-    @Min(value = 10)
-    @Max(value = 10)
+    @Pattern(regexp = "^[0-9]{10}", message = "Required 10 numbers")
     private String phone;
 
     @Column(name = "website")
+    @Pattern(regexp = "^(http:\\/\\/www\\.|https:\\/\\/www\\.|http:\\/\\/|https:\\/\\/)?[a-z0-9]+([\\-\\.]{1}[a-z0-9]+)*\\.[a-z]{2,5}(:[0-9]{1,5})?(\\/.*)?$")
     private String website;
 
 

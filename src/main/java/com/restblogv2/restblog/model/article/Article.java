@@ -12,6 +12,7 @@ import com.restblogv2.restblog.model.user.User;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -42,10 +43,12 @@ public class Article extends UserDateAudit implements Serializable {
     @Lob
     @NotBlank
     @NotNull
+    @Min(value = 20)
     private String body;
 
     @NotBlank
     @NotNull
+    @Min(value = 20)
     private String summary;
 
     @Column(unique = true)

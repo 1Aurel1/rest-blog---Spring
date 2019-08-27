@@ -1,4 +1,4 @@
-package com.restblogv2.restblog.dto;
+package com.restblogv2.restblog.payload.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

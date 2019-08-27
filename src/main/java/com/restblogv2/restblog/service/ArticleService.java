@@ -2,8 +2,8 @@ package com.restblogv2.restblog.service;
 
 
 
-import com.restblogv2.restblog.dto.ArticleDto;
-import com.restblogv2.restblog.dto.CommentDto;
+import com.restblogv2.restblog.payload.dto.ArticleDto;
+import com.restblogv2.restblog.payload.dto.CommentDto;
 import com.restblogv2.restblog.exeption.AppException;
 import com.restblogv2.restblog.exeption.BadRequestException;
 import com.restblogv2.restblog.exeption.ResourceNotFoundException;

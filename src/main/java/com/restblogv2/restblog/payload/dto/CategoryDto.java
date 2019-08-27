@@ -1,10 +1,7 @@
-package com.restblogv2.restblog.dto;
+package com.restblogv2.restblog.payload.dto;
 
-import com.restblogv2.restblog.model.article.Article;
-import com.restblogv2.restblog.model.category.Category;
 import lombok.*;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.List;

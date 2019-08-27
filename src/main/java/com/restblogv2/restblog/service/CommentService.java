@@ -1,6 +1,6 @@
 package com.restblogv2.restblog.service;
 
-import com.restblogv2.restblog.dto.CommentDto;
+import com.restblogv2.restblog.payload.dto.CommentDto;
 import com.restblogv2.restblog.exeption.ResourceNotFoundException;
 import com.restblogv2.restblog.model.comment.Comment;
 import com.restblogv2.restblog.payload.ApiResponse;

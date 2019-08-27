@@ -1,14 +1,10 @@
-package com.restblogv2.restblog.dto;
+package com.restblogv2.restblog.payload.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.restblogv2.restblog.model.article.Article;
 import lombok.*;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 
 @Getter

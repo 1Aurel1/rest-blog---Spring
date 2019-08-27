@@ -15,7 +15,19 @@ public class ConstrainValidator implements ConstraintValidator<PhoneNumber, Stri
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
 
-        boolean result = value.startsWith(phonePrefix);
+        boolean result;
+
+        if (value != null){
+            if (value.length() == 10){
+                result = value.startsWith(phonePrefix);
+            }else {
+                return false;
+            }
+
+        }else
+            return true;
+
+
 
         return result;
     }

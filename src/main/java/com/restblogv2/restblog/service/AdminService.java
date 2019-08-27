@@ -1,6 +1,6 @@
 package com.restblogv2.restblog.service;
 
-import com.restblogv2.restblog.dto.ArticlePositionDto;
+import com.restblogv2.restblog.payload.dto.ArticlePositionDto;
 import com.restblogv2.restblog.exeption.BadRequestException;
 import com.restblogv2.restblog.exeption.ResourceNotFoundException;
 import com.restblogv2.restblog.model.article.Article;
@@ -21,7 +21,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Currency;
 import java.util.List;
 
 @Service

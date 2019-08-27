@@ -1,6 +1,6 @@
 package com.restblogv2.restblog.controller;
 
-import com.restblogv2.restblog.dto.ArticleDto;
+import com.restblogv2.restblog.payload.dto.ArticleDto;
 import com.restblogv2.restblog.model.article.Article;
 import com.restblogv2.restblog.payload.PagedResponse;
 import com.restblogv2.restblog.security.CurrentUser;
