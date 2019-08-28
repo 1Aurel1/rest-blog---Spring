@@ -1,6 +1,6 @@
 package com.restblogv2.restblog.payload.dto;
 
-public class ImageDto {
+public class ImageRequest {
 
     private String url;
 

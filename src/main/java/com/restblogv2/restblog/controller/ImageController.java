@@ -1,6 +1,6 @@
 package com.restblogv2.restblog.controller;
 
-import com.restblogv2.restblog.payload.ImageUpdate;
+import com.restblogv2.restblog.payload.image.ImageUpdate;
 import com.restblogv2.restblog.security.CurrentUser;
 import com.restblogv2.restblog.security.UserPrincipal;
 import com.restblogv2.restblog.service.ImageService;

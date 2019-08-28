@@ -5,7 +5,7 @@ import com.restblogv2.restblog.exeption.ResourceNotFoundException;
 import com.restblogv2.restblog.model.image.Image;
 import com.restblogv2.restblog.model.role.RoleName;
 import com.restblogv2.restblog.payload.ApiResponse;
-import com.restblogv2.restblog.payload.ImageUpdate;
+import com.restblogv2.restblog.payload.image.ImageUpdate;
 import com.restblogv2.restblog.repository.ImageRepository;
 import com.restblogv2.restblog.repository.UserRepository;
 import com.restblogv2.restblog.security.UserPrincipal;

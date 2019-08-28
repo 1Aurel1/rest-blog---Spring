@@ -3,8 +3,8 @@ package com.restblogv2.restblog.service;
 
 
 import com.restblogv2.restblog.payload.ArticelImagesRelations;
-import com.restblogv2.restblog.payload.dto.ArticleDto;
-import com.restblogv2.restblog.payload.dto.CommentDto;
+import com.restblogv2.restblog.payload.article.ArticleRequest;
+import com.restblogv2.restblog.payload.dto.CommentRequest;
 import com.restblogv2.restblog.exeption.AppException;
 import com.restblogv2.restblog.exeption.BadRequestException;
 import com.restblogv2.restblog.exeption.ResourceNotFoundException;
@@ -80,7 +80,7 @@ public class ArticleService {
         return new ResponseEntity<>(articlePagedResponse, HttpStatus.OK);
     }
 
-    public ResponseEntity<?> updateArticle(Long id, ArticleDto newArticle, UserPrincipal currentUser) throws Exception {
+    public ResponseEntity<?> updateArticle(Long id, ArticleRequest newArticle, UserPrincipal currentUser) throws Exception {
         Article article = articleRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Article", "id", id));
         if (article.getUser().getId().equals(currentUser.getId()) || currentUser.getAuthorities().contains(new SimpleGrantedAuthority(RoleName.ROLE_ADMIN.toString()))){
 
@@ -123,7 +123,7 @@ public class ArticleService {
         return new ResponseEntity<>(new ApiResponse(true, "You don't have permission to delete this article"), HttpStatus.UNAUTHORIZED);
     }
 
-    public ResponseEntity<?> addArticle(ArticleDto newArticle, UserPrincipal currentUser){
+    public ResponseEntity<?> addArticle(ArticleRequest newArticle, UserPrincipal currentUser){
         User user = userRepository.findById(currentUser.getId()).orElseThrow(() -> new ResourceNotFoundException("User", "id", 1L));
 
         Article article = new Article();
@@ -173,11 +173,11 @@ public class ArticleService {
 
     public ResponseEntity<?> getArticle(Long id){
         Article article = articleRepository.getByIdAndEnabledIsTrueAndAuthorisedIsTrue(id).orElseThrow(() -> new ResourceNotFoundException("Article", "id", id));
-        List<CommentDto> commentDtos = new ArrayList<>();
+        List<CommentRequest> commentDtos = new ArrayList<>();
 
         for(Comment comment : article.getComments()){
             if (comment.isAuthorised()) {
-                CommentDto commentDto = new CommentDto();
+                CommentRequest commentDto = new CommentRequest();
                 commentDto.setId(comment.getId());
                 commentDto.setBody(comment.getBody());
                 commentDto.setUserId(comment.getUser().getId());

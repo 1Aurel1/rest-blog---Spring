@@ -1,6 +1,6 @@
 package com.restblogv2.restblog.service;
 
-import com.restblogv2.restblog.payload.dto.CommentDto;
+import com.restblogv2.restblog.payload.dto.CommentRequest;
 import com.restblogv2.restblog.exeption.ResourceNotFoundException;
 import com.restblogv2.restblog.model.comment.Comment;
 import com.restblogv2.restblog.payload.ApiResponse;
@@ -28,7 +28,7 @@ public class CommentService {
         this.userRepository = userRepository;
     }
 
-    public ResponseEntity<?> createComment(CommentDto commentDto){
+    public ResponseEntity<?> createComment(CommentRequest commentDto){
 
         Comment comment = new Comment();
 
@@ -41,7 +41,7 @@ public class CommentService {
     }
 
     public ResponseEntity<?> updateComment(
-            Long id, CommentDto newCommentDto, UserPrincipal currentUser
+            Long id, CommentRequest newCommentDto, UserPrincipal currentUser
             ){
         Comment comment = commentRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Comment", "id", id));
         if (comment.getUser().getId().equals(currentUser.getId())){

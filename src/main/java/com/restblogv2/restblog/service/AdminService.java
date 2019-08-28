@@ -1,6 +1,6 @@
 package com.restblogv2.restblog.service;
 
-import com.restblogv2.restblog.payload.dto.ArticlePositionDto;
+import com.restblogv2.restblog.payload.article.ArticlePositionRequest;
 import com.restblogv2.restblog.exeption.BadRequestException;
 import com.restblogv2.restblog.exeption.ResourceNotFoundException;
 import com.restblogv2.restblog.model.article.Article;
@@ -59,7 +59,7 @@ public class AdminService {
         return new ResponseEntity<>(new ApiResponse(false, "Unauthorised"), HttpStatus.UNAUTHORIZED);
     }
 
-    public ResponseEntity<?> updateArticlesPositions(List<ArticlePositionDto> articlePositionDtos, UserPrincipal currentUser){
+    public ResponseEntity<?> updateArticlesPositions(List<ArticlePositionRequest> articlePositionDtos, UserPrincipal currentUser){
 
         List<Long> ids = new ArrayList<>();
         articlePositionDtos.forEach((article) -> ids.add(article.getId()));

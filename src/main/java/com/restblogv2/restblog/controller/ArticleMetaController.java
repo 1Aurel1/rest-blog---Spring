@@ -1,8 +1,7 @@
 package com.restblogv2.restblog.controller;
 
 
-import com.restblogv2.restblog.model.user.User;
-import com.restblogv2.restblog.payload.ArticleMetaRequest;
+import com.restblogv2.restblog.payload.article.ArticleMetaRequest;
 import com.restblogv2.restblog.security.CurrentUser;
 import com.restblogv2.restblog.security.UserPrincipal;
 import com.restblogv2.restblog.service.ArticleMetaService;

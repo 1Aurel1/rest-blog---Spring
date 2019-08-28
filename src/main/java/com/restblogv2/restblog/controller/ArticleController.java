@@ -1,9 +1,7 @@
 package com.restblogv2.restblog.controller;
 
 import com.restblogv2.restblog.payload.ArticelImagesRelations;
-import com.restblogv2.restblog.payload.dto.ArticleDto;
-import com.restblogv2.restblog.model.article.Article;
-import com.restblogv2.restblog.payload.PagedResponse;
+import com.restblogv2.restblog.payload.article.ArticleRequest;
 import com.restblogv2.restblog.security.CurrentUser;
 import com.restblogv2.restblog.security.UserPrincipal;
 import com.restblogv2.restblog.service.ArticleService;
@@ -83,7 +81,7 @@ public class ArticleController {
     )
     @PostMapping
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<?> addArticle(@Valid @RequestBody ArticleDto article, @CurrentUser UserPrincipal currentUser){
+    public ResponseEntity<?> addArticle(@Valid @RequestBody ArticleRequest article, @CurrentUser UserPrincipal currentUser){
         return articleService.addArticle(article, currentUser);
     }
 
@@ -97,7 +95,7 @@ public class ArticleController {
     )
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public ResponseEntity<?> updateArticle(@PathVariable(name = "id") Long id, @Valid @RequestBody ArticleDto newArticle, @CurrentUser UserPrincipal currentUser) throws Exception {
+    public ResponseEntity<?> updateArticle(@PathVariable(name = "id") Long id, @Valid @RequestBody ArticleRequest newArticle, @CurrentUser UserPrincipal currentUser) throws Exception {
         return articleService.updateArticle(id, newArticle, currentUser);
     }
 

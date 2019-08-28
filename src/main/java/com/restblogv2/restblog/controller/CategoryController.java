@@ -1,6 +1,6 @@
 package com.restblogv2.restblog.controller;
 
-import com.restblogv2.restblog.payload.dto.CategoryDto;
+import com.restblogv2.restblog.payload.dto.CategoryRequest;
 import com.restblogv2.restblog.security.CurrentUser;
 import com.restblogv2.restblog.security.UserPrincipal;
 import com.restblogv2.restblog.service.CategoryService;
@@ -30,7 +30,7 @@ public class CategoryController {
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> postCategory(@Valid @RequestBody CategoryDto categoryDto){
+    public ResponseEntity<?> postCategory(@Valid @RequestBody CategoryRequest categoryDto){
         return categoryService.addCategory(categoryDto);
     }
 
@@ -47,7 +47,7 @@ public class CategoryController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> updateCategory(
             @PathVariable("id") Long id,
-            @Valid @RequestBody CategoryDto updatedCategory,
+            @Valid @RequestBody CategoryRequest updatedCategory,
             @CurrentUser UserPrincipal currentUser
             ){
         return categoryService.updateCategory(id, updatedCategory, currentUser);

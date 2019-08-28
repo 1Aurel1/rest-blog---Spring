@@ -1,6 +1,6 @@
 package com.restblogv2.restblog.controller;
 
-import com.restblogv2.restblog.payload.dto.ArticlePositionDto;
+import com.restblogv2.restblog.payload.article.ArticlePositionRequest;
 import com.restblogv2.restblog.security.CurrentUser;
 import com.restblogv2.restblog.security.UserPrincipal;
 import com.restblogv2.restblog.service.AdminService;
@@ -47,7 +47,7 @@ public class AdminController {
 
     @PutMapping("/articles/updatePositions")
     public ResponseEntity<?> updateArticlesPositions(
-            @Valid @RequestBody List<ArticlePositionDto> articlesPositionsDto,
+            @Valid @RequestBody List<ArticlePositionRequest> articlesPositionsDto,
             @CurrentUser UserPrincipal currentUser
             ){
 

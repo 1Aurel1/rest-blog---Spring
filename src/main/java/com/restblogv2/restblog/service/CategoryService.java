@@ -1,6 +1,6 @@
 package com.restblogv2.restblog.service;
 
-import com.restblogv2.restblog.payload.dto.CategoryDto;
+import com.restblogv2.restblog.payload.dto.CategoryRequest;
 import com.restblogv2.restblog.exeption.BadRequestException;
 import com.restblogv2.restblog.exeption.ResourceNotFoundException;
 import com.restblogv2.restblog.model.article.Article;
@@ -45,7 +45,7 @@ public class CategoryService {
         return new ResponseEntity<>(categoryRepository.findAllByParentNull(), HttpStatus.OK);
     }
 
-    public ResponseEntity<?> addCategory(CategoryDto categoryDto){
+    public ResponseEntity<?> addCategory(CategoryRequest categoryDto){
 
         Category newCategory = new Category();
 //
@@ -79,7 +79,7 @@ public class CategoryService {
         return new ResponseEntity<>(articles, HttpStatus.OK);
     }
 
-    public ResponseEntity<?> updateCategory(Long id, CategoryDto updatedCategory, UserPrincipal currentUser){
+    public ResponseEntity<?> updateCategory(Long id, CategoryRequest updatedCategory, UserPrincipal currentUser){
 
         if (currentUser.getAuthorities().contains(new SimpleGrantedAuthority(RoleName.ROLE_ADMIN.toString()))){
 

@@ -1,4 +1,4 @@
-package com.restblogv2.restblog.payload.dto;
+package com.restblogv2.restblog.payload.article;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @Getter
 @Setter
-public class ArticlePositionDto {
+public class ArticlePositionRequest {
 
     @NotNull
     private Long id;

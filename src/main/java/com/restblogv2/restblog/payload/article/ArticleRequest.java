@@ -1,4 +1,4 @@
-package com.restblogv2.restblog.payload.dto;
+package com.restblogv2.restblog.payload.article;
 
 import com.restblogv2.restblog.model.audit.DateAudit;
 import com.restblogv2.restblog.model.image.Image;
@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-public class ArticleDto extends DateAudit {
+public class ArticleRequest extends DateAudit {
 
     @NotBlank
     @NotNull

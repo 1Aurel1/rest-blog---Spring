@@ -1,6 +1,6 @@
 package com.restblogv2.restblog.controller;
 
-import com.restblogv2.restblog.payload.dto.CommentDto;
+import com.restblogv2.restblog.payload.dto.CommentRequest;
 import com.restblogv2.restblog.security.CurrentUser;
 import com.restblogv2.restblog.security.UserPrincipal;
 import com.restblogv2.restblog.service.CommentService;
@@ -25,7 +25,7 @@ public class CommentController {
 
     @PostMapping("")
     public ResponseEntity<?> createComment(
-            @Valid @RequestBody CommentDto commentDto,
+            @Valid @RequestBody CommentRequest commentDto,
             @CurrentUser UserPrincipal currentUser
             ){
         commentDto.setUserId(currentUser.getId());
@@ -35,7 +35,7 @@ public class CommentController {
     @PutMapping("/{id}")
     public ResponseEntity<?> updateComment(
             @PathVariable("id") Long id,
-            @Valid @RequestBody CommentDto commentDto,
+            @Valid @RequestBody CommentRequest commentDto,
             @CurrentUser UserPrincipal currentUser
             ){
         return commentService.updateComment(id, commentDto, currentUser);

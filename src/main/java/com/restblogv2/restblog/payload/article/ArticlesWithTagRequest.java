@@ -1,4 +1,4 @@
-package com.restblogv2.restblog.payload;
+package com.restblogv2.restblog.payload.article;
 
 import com.restblogv2.restblog.model.article.Article;
 import lombok.AllArgsConstructor;

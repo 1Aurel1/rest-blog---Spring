@@ -11,7 +11,7 @@ import javax.validation.constraints.NotEmpty;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CommentDto {
+public class CommentRequest {
 
     private long id;
 

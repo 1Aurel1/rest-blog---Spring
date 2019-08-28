@@ -1,9 +1,9 @@
-package com.restblogv2.restblog.payload.dto;
+package com.restblogv2.restblog.payload.user;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 
-public class UserDto {
+public class UserRequest {
 
     private long id;
 
