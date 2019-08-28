@@ -20,6 +20,6 @@ public class CategoryDto {
 
     private List<Long> subCategories;
 
-    private List<Long> articles;
+    private Iterable<Long> articles;
 
 }

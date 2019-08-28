@@ -23,6 +23,7 @@ public class Category implements Serializable {
 
     @NotBlank
     @NotNull
+    @Column(unique = true)
     private String name;
 
     private int position;

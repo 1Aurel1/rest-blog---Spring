@@ -19,7 +19,7 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
     Optional<Article> getById(Long id);
     Optional<Article> getByIdAndEnabledIsTrueAndAuthorisedIsTrue(Long id);
 
-    List<Article> findArticlesById(List<Long> id);
+
     List<Article> findAllByEnabledIsFalse();
 
     Page<Article> findByCreatedBy(Long userId, Pageable pageable);

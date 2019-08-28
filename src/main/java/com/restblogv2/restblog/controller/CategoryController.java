@@ -30,7 +30,7 @@ public class CategoryController {
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> addArticle(@Valid @RequestBody CategoryDto categoryDto){
+    public ResponseEntity<?> postCategory(@Valid @RequestBody CategoryDto categoryDto){
         return categoryService.addCategory(categoryDto);
     }
 

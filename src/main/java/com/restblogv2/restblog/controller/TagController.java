@@ -56,4 +56,9 @@ public class TagController {
         return tagService.getArticlesWithTag(tagName);
     }
 
+    @GetMapping("/{tag}/exists")
+    public ResponseEntity<?> existsTag(@PathVariable("tag") String tag){
+        return tagService.exists(tag);
+    }
+
 }

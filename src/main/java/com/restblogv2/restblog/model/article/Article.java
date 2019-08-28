@@ -43,18 +43,21 @@ public class Article extends UserDateAudit implements Serializable {
     @Lob
     @NotBlank
     @NotNull
-    @Min(value = 20)
     private String body;
 
     @NotBlank
     @NotNull
-    @Min(value = 20)
     private String summary;
 
     @Column(unique = true)
     @NotBlank
     @NotNull
     private String slug;
+
+    @Transient
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
+    private int reactionCount;
 
     @ManyToOne(cascade = {
             CascadeType.DETACH, CascadeType.MERGE,
@@ -112,7 +115,7 @@ public class Article extends UserDateAudit implements Serializable {
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY
     )
-
+    @Getter(AccessLevel.NONE)
     private List<Reaction> reactions;
 
     @ManyToMany(
@@ -210,10 +213,11 @@ public class Article extends UserDateAudit implements Serializable {
         return enabled;
     }
 
-    public int reactionsCount(){
+    public int getReactionCount() {
+        if(reactions == null)
+            return 0;
         return reactions.size();
     }
-
 
 }
 

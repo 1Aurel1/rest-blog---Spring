@@ -62,7 +62,7 @@ public class AdminController {
         return adminService.getAllUnAuthorisedComments(page, size);
     }
 
-    @PutMapping("/comments/{id}/changeStatus")
+    @PutMapping("/comments/{id}/changeAuthorization")
     public ResponseEntity<?> changeCommentStatus(
             @PathVariable("id") Long id,
             @RequestParam("authorised") boolean authorised

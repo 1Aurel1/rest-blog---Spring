@@ -33,7 +33,7 @@ public class ArticleDto extends DateAudit {
     @NotNull
     private String slug;
 
-    private Image featuredImage;
+    private Long featuredImage;
 
     private long position;
 
@@ -47,36 +47,15 @@ public class ArticleDto extends DateAudit {
 
     private boolean open_new_window;
 
-//    @OneToOne(mappedBy = "article", cascade = CascadeType.ALL)
-//    private ArticleMeta meta;
-
-
     private Long user;
 
-//    @ManyToOne(cascade = {
-//            CascadeType.DETACH, CascadeType.MERGE,
-//            CascadeType.PERSIST, CascadeType.REFRESH
-//    }, optional = true)
-//    @JoinColumn(name = "category_id")
-//    private Category category;
-
-//    @OneToMany(mappedBy = "article",
-//            cascade = CascadeType.ALL,
-//            fetch = FetchType.LAZY
-//    )
-//    private List<ArticleComment> comments;
-//
-//    @OneToMany(mappedBy = "article",
-//            cascade = CascadeType.ALL,
-//            fetch = FetchType.LAZY
-//    )
-//    private List<Reaction> reactions;
+    private Long category;
 
 
     private List<Long> tags;
 
 
-   private List<Long> images;
+   private Iterable<Long> images;
 
 
 }

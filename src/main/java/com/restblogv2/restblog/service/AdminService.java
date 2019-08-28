@@ -66,7 +66,7 @@ public class AdminService {
         List<Long> positions = new ArrayList<>();
         articlePositionDtos.forEach((article) -> positions.add(article.getPosition()));
 
-        List<Article> articles = articleRepository.findArticlesById(ids);
+        List<Article> articles = articleRepository.findAllById(ids);
         if (currentUser.getAuthorities().contains(new SimpleGrantedAuthority(RoleName.ROLE_ADMIN.toString()))){
             for(int i = 0; i < articles.size(); i++){
                 articles.get(i).setPosition(positions.get(i));

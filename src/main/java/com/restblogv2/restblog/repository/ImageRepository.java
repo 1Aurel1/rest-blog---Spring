@@ -11,6 +11,6 @@ public interface ImageRepository extends PagingAndSortingRepository<Image, Long>
 
     Page<Image> findAllByUserId(Long id, Pageable pageable);
 
-    List<Image> findAllById(List<Long> ids);
+    List<Image> findAllById(Iterable<Long> ids);
 
 }

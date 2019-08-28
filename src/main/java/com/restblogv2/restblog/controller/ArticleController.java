@@ -1,5 +1,6 @@
 package com.restblogv2.restblog.controller;
 
+import com.restblogv2.restblog.payload.ArticelImagesRelations;
 import com.restblogv2.restblog.payload.dto.ArticleDto;
 import com.restblogv2.restblog.model.article.Article;
 import com.restblogv2.restblog.payload.PagedResponse;
@@ -40,7 +41,7 @@ public class ArticleController {
         }
     )
     @GetMapping
-    public PagedResponse<Article> getAllArticles(
+    public ResponseEntity<?> getAllArticles(
             @RequestParam(value = "page", required = false, defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) Integer page,
             @RequestParam(value = "size", required = false, defaultValue = AppConstants.DEFAULT_PAGE_SIZE) Integer size){
         return articleService.getAllArticlesShowalbe(page, size);
@@ -59,6 +60,21 @@ public class ArticleController {
         return articleService.getArticle(id);
     }
 
+    @PutMapping("/{id}/addImageRelations")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    public ResponseEntity<?> createRelations(
+            @PathVariable("id") Long articleId, @RequestBody ArticelImagesRelations articelImagesRelations,
+            @CurrentUser UserPrincipal currentUserr
+        ){
+        return articleService.createImageRelations(articleId, articelImagesRelations, currentUserr);
+    }
+
+    @PutMapping("/{id}/removeImageRelations")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    public ResponseEntity<?> removeRelations(){
+        return null;
+    }
+
     @ApiOperation("Create a new article")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successfully created"),
@@ -67,7 +83,7 @@ public class ArticleController {
     )
     @PostMapping
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<?> addArticle(@Valid @RequestBody Article article, @CurrentUser UserPrincipal currentUser){
+    public ResponseEntity<?> addArticle(@Valid @RequestBody ArticleDto article, @CurrentUser UserPrincipal currentUser){
         return articleService.addArticle(article, currentUser);
     }
 

@@ -84,6 +84,10 @@ public class TagService {
 
     }
 
+    public ResponseEntity<?> exists(String tag){
+        return new ResponseEntity<>(tagRepository.existsTagByTag(tag), HttpStatus.OK);
+    }
+
     private void validatePageNumberAndSize(int page, int size) {
         if(page < 0) {
             throw new BadRequestException("Page number cannot be less than zero.");

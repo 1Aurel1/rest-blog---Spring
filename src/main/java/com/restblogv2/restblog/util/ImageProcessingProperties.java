@@ -10,8 +10,8 @@ public interface ImageProcessingProperties {
 
     String[] IMAGE_PATHS = {"thumbnail", "medium", "original"};
 
-    public final int THUMBNAIL_WIDTH = 75;
-    public final int MEDIUM_WIDTH = 350;
+    public final int THUMBNAIL_SIZE = 75;
+    public final int MEDIUM_SIZE = 400;
 
     //public final MultipartFile WATER_MARK_FILE = (MultipartFile) new ClassPathResource("img/waterMark/watermark.png");
 

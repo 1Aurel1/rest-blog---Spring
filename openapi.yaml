@@ -1,0 +1,2240 @@
+openapi: 3.0.1
+info:
+  title: Rest blog api
+  description: Sagger documentaion for my rest blog.
+  contact:
+    name: Aurel Marishta
+    email: aurel.marishta@atis.al
+  license:
+    name: License of API
+  version: API TOS
+servers:
+- url: http://localhost:8080/
+tags:
+- name: Admin
+  description: Admin Controller
+- name: Articles
+  description: Article Controller
+- name: Auth
+  description: Auth Controller
+- name: Categories
+  description: Category Controller
+- name: Comments
+  description: Comment Controller
+- name: Images
+  description: Image
+- name: Site Confs
+  description: Site-confs
+- name: Tags
+  description: tags-controller
+- name: Users
+  description: User Controller
+paths:
+  /api/admin/articles/unathorised:
+    get:
+      tags:
+      - Admin
+      summary: getAllUnAuthorisedArticles
+      operationId: getAllUnAuthorisedArticlesUsingGET
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+      security:
+      - bearerAuth: []
+  /api/admin/articles/updatePositions:
+    put:
+      tags:
+      - Admin
+      summary: updateArticlesPositions
+      operationId: updateArticlesPositionsUsingPUT
+      requestBody:
+        description: articlesPositionsDto
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/ArticlePositionDto'
+        required: true
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+        201:
+          description: Created
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+      security:
+      - bearerAuth: []
+  /api/admin/articles/{id}/authorise:
+    put:
+      tags:
+      - Admin
+      summary: changeAuthorisationForArticle
+      operationId: changeAuthorisationForArticleUsingPUT
+      parameters:
+      - name: authorised
+        in: query
+        description: authorised
+        required: true
+        schema:
+          type: boolean
+      - name: id
+        in: path
+        description: id
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+        201:
+          description: Created
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+      security:
+      - bearerAuth: []
+  /api/admin/comments:
+    get:
+      tags:
+      - Admin
+      summary: getAllUnAuthorisedComments
+      operationId: getAllUnAuthorisedCommentsUsingGET
+      parameters:
+      - name: page
+        in: query
+        description: page
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      - name: size
+        in: query
+        description: size
+        schema:
+          type: integer
+          format: int32
+          default: 30
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+      security:
+      - bearerAuth: []
+  /api/admin/comments/{id}/changeStatus:
+    put:
+      tags:
+      - Admin
+      summary: changeCommentStatus
+      operationId: changeCommentStatusUsingPUT
+      parameters:
+      - name: authorised
+        in: query
+        description: authorised
+        required: true
+        schema:
+          type: boolean
+      - name: id
+        in: path
+        description: id
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+        201:
+          description: Created
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+      security:
+      - bearerAuth: []
+  /api/articles:
+    get:
+      tags:
+      - Articles
+      summary: View all available articles
+      operationId: getAllArticlesUsingGET
+      parameters:
+      - name: page
+        in: query
+        description: page
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      - name: size
+        in: query
+        description: size
+        schema:
+          type: integer
+          format: int32
+          default: 30
+      responses:
+        200:
+          description: Successfully retrieved list
+          content: {}
+        401:
+          description: You are not authorized to view the resource
+          content: {}
+        403:
+          description: Accessing the resource you were trying to reach is forbidden
+          content: {}
+        404:
+          description: The resource you were trying to reach is not found
+          content: {}
+      deprecated: false
+    post:
+      tags:
+      - Articles
+      summary: Create a new article
+      operationId: addArticleUsingPOST
+      parameters:
+      - name: accountNonExpired
+        in: query
+        schema:
+          type: boolean
+      - name: accountNonLocked
+        in: query
+        schema:
+          type: boolean
+      - name: authorities[0].authority
+        in: query
+        schema:
+          type: string
+      - name: credentialsNonExpired
+        in: query
+        schema:
+          type: boolean
+      - name: email
+        in: query
+        schema:
+          type: string
+      - name: enabled
+        in: query
+        schema:
+          type: boolean
+      - name: firstName
+        in: query
+        schema:
+          type: string
+      - name: id
+        in: query
+        schema:
+          type: integer
+          format: int64
+      - name: lastName
+        in: query
+        schema:
+          type: string
+      - name: password
+        in: query
+        schema:
+          type: string
+      - name: username
+        in: query
+        schema:
+          type: string
+      requestBody:
+        description: article
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Article'
+        required: true
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+        201:
+          description: Successfully created
+          content:
+            '*/*':
+              schema:
+                type: object
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Authorisation required
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+      security:
+      - bearerAuth: []
+  /api/articles/{id}:
+    get:
+      tags:
+      - Articles
+      summary: View article
+      operationId: getArticleUsingGET
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        200:
+          description: Successfully retrieved article
+          content:
+            '*/*':
+              schema:
+                type: object
+        401:
+          description: You are not authorized to view the resource
+          content: {}
+        403:
+          description: Accessing the resource you were trying to reach is forbidden
+          content: {}
+        404:
+          description: The resource you were trying to reach is not found
+          content: {}
+      deprecated: false
+    put:
+      tags:
+      - Articles
+      summary: Update article
+      operationId: updateArticleUsingPUT
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        description: newArticle
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ArticleDto'
+        required: true
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+        201:
+          description: Created
+          content: {}
+        202:
+          description: Successfully updated
+          content:
+            '*/*':
+              schema:
+                type: object
+        401:
+          description: You are not authorized to update the resource
+          content: {}
+        403:
+          description: Authorisation required
+          content: {}
+        404:
+          description: The resource you were trying to reach is not found
+          content: {}
+      deprecated: false
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - Articles
+      summary: Delete article
+      operationId: deleteArticleUsingDELETE
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+        204:
+          description: Successfully deleted
+          content:
+            '*/*':
+              schema:
+                type: object
+        401:
+          description: You are not authorized to delete the resource
+          content: {}
+        403:
+          description: Authorisation required
+          content: {}
+        404:
+          description: The resource you were trying to reach is not found
+          content: {}
+      deprecated: false
+      security:
+      - bearerAuth: []
+  /api/auth/confirm-email:
+    get:
+      tags:
+      - Auth
+      summary: confirmUserAccount
+      operationId: confirmUserAccountUsingGET
+      parameters:
+      - name: token
+        in: query
+        description: token
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+    post:
+      tags:
+      - Auth
+      summary: confirmUserAccount
+      operationId: confirmUserAccountUsingPOST
+      parameters:
+      - name: token
+        in: query
+        description: token
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+        201:
+          description: Created
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /api/auth/resetPassword:
+    get:
+      tags:
+      - Auth
+      summary: sendRestPaswordToken
+      operationId: sendRestPaswordTokenUsingGET
+      parameters:
+      - name: email
+        in: query
+        description: email
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+    put:
+      tags:
+      - Auth
+      summary: resetPassword
+      operationId: resetPasswordUsingPUT
+      requestBody:
+        description: resetPasswordRequest
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResetPasswordRequest'
+        required: true
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+        201:
+          description: Created
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /api/auth/signin:
+    post:
+      tags:
+      - Auth
+      summary: authenticateUser
+      operationId: authenticateUserUsingPOST
+      requestBody:
+        description: loginRequest
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+        required: true
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+        201:
+          description: Created
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /api/auth/signup:
+    post:
+      tags:
+      - Auth
+      summary: registerUser
+      operationId: registerUserUsingPOST
+      requestBody:
+        description: signUpRequest
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignUpRequest'
+        required: true
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+        201:
+          description: Created
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /api/categories:
+    get:
+      tags:
+      - Categories
+      summary: getAllArticles
+      operationId: getAllArticlesUsingGET_1
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+    post:
+      tags:
+      - Categories
+      summary: addArticle
+      operationId: addArticleUsingPOST_1
+      requestBody:
+        description: categoryDto
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoryDto'
+        required: true
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+        201:
+          description: Created
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+      security:
+      - bearerAuth: []
+  /api/categories/{id}:
+    put:
+      tags:
+      - Categories
+      summary: updateCategory
+      operationId: updateCategoryUsingPUT
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        description: updatedCategory
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoryDto'
+        required: true
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+        201:
+          description: Created
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+      security:
+      - bearerAuth: []
+  /api/categories/{id}/articles:
+    get:
+      tags:
+      - Categories
+      summary: getCategoryArticles
+      operationId: getCategoryArticlesUsingGET
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: page
+        in: query
+        description: page
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      - name: size
+        in: query
+        description: size
+        schema:
+          type: integer
+          format: int32
+          default: 30
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /api/comments:
+    post:
+      tags:
+      - Comments
+      summary: createComment
+      operationId: createCommentUsingPOST
+      requestBody:
+        description: commentDto
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentDto'
+        required: true
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+        201:
+          description: Created
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+      security:
+      - bearerAuth: []
+  /api/comments/{id}:
+    put:
+      tags:
+      - Comments
+      summary: updateComment
+      operationId: updateCommentUsingPUT
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        description: commentDto
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentDto'
+        required: true
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+        201:
+          description: Created
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - Comments
+      summary: deleteComment
+      operationId: deleteCommentUsingDELETE
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+        204:
+          description: No Content
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+      deprecated: false
+      security:
+      - bearerAuth: []
+  /api/images:
+    get:
+      tags:
+      - Images
+      summary: getImages
+      operationId: getImagesUsingGET
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+    post:
+      tags:
+      - Images
+      summary: postImage
+      operationId: postImageUsingPOST
+      parameters:
+      - name: alt
+        in: query
+        description: alt
+        schema:
+          type: string
+      - name: description
+        in: query
+        description: description
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              required:
+              - file
+              properties:
+                file:
+                  type: string
+                  description: file
+                  format: binary
+        required: true
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+        201:
+          description: Created
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+      security:
+      - bearerAuth: []
+  /api/images/{id}:
+    get:
+      tags:
+      - Images
+      summary: getImage
+      operationId: getImageUsingGET
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+    put:
+      tags:
+      - Images
+      summary: updateImage
+      operationId: updateImageUsingPUT
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        description: imageUpdate
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ImageUpdate'
+        required: true
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+        201:
+          description: Created
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - Images
+      summary: deleteImage
+      operationId: deleteImageUsingDELETE
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+        204:
+          description: No Content
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+      deprecated: false
+      security:
+      - bearerAuth: []
+  /api/siteConf:
+    get:
+      tags:
+      - Site Confs
+      summary: getAllSiteConf
+      operationId: getAllSiteConfUsingGET
+      parameters:
+      - name: page
+        in: query
+        description: page
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      - name: size
+        in: query
+        description: size
+        schema:
+          type: integer
+          format: int32
+          default: 30
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+      security:
+      - bearerAuth: []
+  /api/siteConf/{key}:
+    get:
+      tags:
+      - Site Confs
+      summary: getSeteConf
+      operationId: getSeteConfUsingGET
+      parameters:
+      - name: key
+        in: path
+        description: key
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+      security:
+      - bearerAuth: []
+    put:
+      tags:
+      - Site Confs
+      summary: updateSiteConf
+      operationId: updateSiteConfUsingPUT
+      parameters:
+      - name: key
+        in: path
+        description: key
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: newSiteConf
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SiteConf'
+        required: true
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+        201:
+          description: Created
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - Site Confs
+      summary: deleteSiteConf
+      operationId: deleteSiteConfUsingDELETE
+      parameters:
+      - name: key
+        in: path
+        description: key
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+        204:
+          description: No Content
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+      deprecated: false
+      security:
+      - bearerAuth: []
+  /api/tags:
+    get:
+      tags:
+      - Tags
+      summary: getAllTags
+      operationId: getAllTagsUsingGET
+      parameters:
+      - name: page
+        in: query
+        description: page
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      - name: size
+        in: query
+        description: size
+        schema:
+          type: integer
+          format: int32
+          default: 30
+      responses:
+        200:
+          description: OK
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+    post:
+      tags:
+      - Tags
+      summary: addPost
+      operationId: addPostUsingPOST
+      requestBody:
+        description: tag
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Tag'
+        required: true
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+        201:
+          description: Created
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+      security:
+      - bearerAuth: []
+  /api/tags/{id}:
+    get:
+      tags:
+      - Tags
+      summary: getArticle
+      operationId: getArticleUsingGET_1
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+    delete:
+      tags:
+      - Tags
+      summary: deleteTag
+      operationId: deleteTagUsingDELETE
+      parameters:
+      - name: accountNonExpired
+        in: query
+        schema:
+          type: boolean
+      - name: accountNonLocked
+        in: query
+        schema:
+          type: boolean
+      - name: authorities[0].authority
+        in: query
+        schema:
+          type: string
+      - name: credentialsNonExpired
+        in: query
+        schema:
+          type: boolean
+      - name: email
+        in: query
+        schema:
+          type: string
+      - name: enabled
+        in: query
+        schema:
+          type: boolean
+      - name: firstName
+        in: query
+        schema:
+          type: string
+      - name: id
+        in: path
+        description: id
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: id
+        in: query
+        schema:
+          type: integer
+          format: int64
+      - name: lastName
+        in: query
+        schema:
+          type: string
+      - name: password
+        in: query
+        schema:
+          type: string
+      - name: username
+        in: query
+        schema:
+          type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+        204:
+          description: No Content
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+      deprecated: false
+      security:
+      - bearerAuth: []
+  /api/tags/{tag}/articles:
+    get:
+      tags:
+      - Tags
+      summary: getAllArticlesWithTag
+      operationId: getAllArticlesWithTagUsingGET
+      parameters:
+      - name: tag
+        in: path
+        description: tag
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /api/users/checkEmailAvailability:
+    get:
+      tags:
+      - Users
+      summary: checkEmailAvailability
+      operationId: checkEmailAvailabilityUsingGET
+      parameters:
+      - name: email
+        in: query
+        description: email
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/UserIdentityAvailability'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /api/users/checkUsernameAvailability:
+    get:
+      tags:
+      - Users
+      summary: checkUsernameAvailability
+      operationId: checkUsernameAvailabilityUsingGET
+      parameters:
+      - name: username
+        in: query
+        description: username
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/UserIdentityAvailability'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /api/users/me:
+    get:
+      tags:
+      - Users
+      summary: getCurrentUser
+      operationId: getCurrentUserUsingGET
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/UserSummary'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+      security:
+      - bearerAuth: []
+  /api/users/setOrUpdateInfo:
+    put:
+      tags:
+      - Users
+      summary: setAddress
+      operationId: setAddressUsingPUT
+      requestBody:
+        description: infoRequest
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InfoRequest'
+        required: true
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+        201:
+          description: Created
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+      security:
+      - bearerAuth: []
+  /api/users/{username}:
+    put:
+      tags:
+      - Users
+      summary: updateUser
+      operationId: updateUserUsingPUT
+      parameters:
+      - name: username
+        in: path
+        description: username
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: newUser
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+        201:
+          description: Created
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - Users
+      summary: deleteUser
+      operationId: deleteUserUsingDELETE
+      parameters:
+      - name: username
+        in: path
+        description: username
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+        204:
+          description: No Content
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+      deprecated: false
+      security:
+      - bearerAuth: []
+  /api/users/{username}/articles:
+    get:
+      tags:
+      - Users
+      summary: getArticlesCreatedBy
+      operationId: getArticlesCreatedByUsingGET
+      parameters:
+      - name: page
+        in: query
+        description: page
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      - name: size
+        in: query
+        description: size
+        schema:
+          type: integer
+          format: int32
+          default: 30
+      - name: username
+        in: path
+        description: username
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: OK
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /api/users/{username}/giveAdmin:
+    put:
+      tags:
+      - Users
+      summary: giveAdmin
+      operationId: giveAdminUsingPUT
+      parameters:
+      - name: username
+        in: path
+        description: username
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+        201:
+          description: Created
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+      security:
+      - bearerAuth: []
+  /api/users/{username}/profile:
+    get:
+      tags:
+      - Users
+      summary: getUSerProfile
+      operationId: getUSerProfileUsingGET
+      parameters:
+      - name: username
+        in: path
+        description: username
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/UserProfile'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /api/users/{username}/takeAdmin:
+    put:
+      tags:
+      - Users
+      summary: takeAdmin
+      operationId: takeAdminUsingPUT
+      parameters:
+      - name: username
+        in: path
+        description: username
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+        201:
+          description: Created
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+      security:
+      - bearerAuth: []
+components:
+  
+  securitySchemes:
+    bearerAuth:            # arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+      bearerFormat: JWT 
+
+  schemas:
+    Company:
+      title: Company
+      type: object
+      properties:
+        bs:
+          type: string
+        catchPhrase:
+          type: string
+        name:
+          type: string
+    User:
+      title: User
+      type: object
+      properties:
+        accountNonExpired:
+          type: boolean
+        accountNonLocked:
+          type: boolean
+        address:
+          $ref: '#/components/schemas/Address'
+        company:
+          $ref: '#/components/schemas/Company'
+        createdAt:
+          type: string
+          format: date-time
+        credentialsNonExpired:
+          type: boolean
+        email:
+          type: string
+        enabled:
+          type: boolean
+        firstName:
+          type: string
+        id:
+          type: integer
+          format: int64
+        lastName:
+          type: string
+        password:
+          type: string
+        phone:
+          type: string
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/Role'
+        updatedAt:
+          type: string
+          format: date-time
+        username:
+          type: string
+        website:
+          type: string
+    Address:
+      title: Address
+      type: object
+      properties:
+        city:
+          type: string
+        geo:
+          $ref: '#/components/schemas/Geo'
+        street:
+          type: string
+        suite:
+          type: string
+        zipcode:
+          type: string
+    UserProfile:
+      title: UserProfile
+      type: object
+      properties:
+        address:
+          $ref: '#/components/schemas/Address'
+        company:
+          $ref: '#/components/schemas/Company'
+        email:
+          type: string
+        firstName:
+          type: string
+        id:
+          type: integer
+          format: int64
+        joinedAt:
+          type: string
+          format: date-time
+        lastName:
+          type: string
+        phone:
+          type: string
+        postCount:
+          type: integer
+          format: int64
+        username:
+          type: string
+        website:
+          type: string
+    Article:
+      title: Article
+      type: object
+      properties:
+        body:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        createdBy:
+          type: integer
+          format: int64
+        featuredImage:
+          $ref: '#/components/schemas/Image'
+        id:
+          type: integer
+          format: int64
+        metas:
+          type: array
+          items:
+            $ref: '#/components/schemas/ArticleMeta'
+        open_new_window:
+          type: boolean
+        position:
+          type: integer
+          format: int64
+        reactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Reaction'
+        scheduledAt:
+          type: string
+          format: date-time
+        slug:
+          type: string
+        summary:
+          type: string
+        title:
+          type: string
+        updatedAt:
+          type: string
+          format: date-time
+        updatedBy:
+          type: integer
+          format: int64
+    UserIdentityAvailability:
+      title: UserIdentityAvailability
+      type: object
+      properties:
+        available:
+          type: boolean
+    CommentDto:
+      title: CommentDto
+      type: object
+      properties:
+        articleId:
+          type: integer
+          format: int64
+        body:
+          type: string
+        id:
+          type: integer
+          format: int64
+        username:
+          type: string
+    UserSummary:
+      title: UserSummary
+      type: object
+      properties:
+        firstName:
+          type: string
+        id:
+          type: integer
+          format: int64
+        lastName:
+          type: string
+        username:
+          type: string
+    LoginRequest:
+      title: LoginRequest
+      type: object
+      properties:
+        password:
+          type: string
+        usernameOrEmail:
+          type: string
+    Image:
+      title: Image
+      type: object
+      properties:
+        alt:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        createdBy:
+          type: integer
+          format: int64
+        description:
+          type: string
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        size:
+          type: integer
+          format: int64
+        type:
+          type: string
+        updatedAt:
+          type: string
+          format: date-time
+        updatedBy:
+          type: integer
+          format: int64
+        url:
+          type: string
+    ArticleDto:
+      title: ArticleDto
+      type: object
+      properties:
+        _featured:
+          type: boolean
+        authorised:
+          type: boolean
+        body:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        enabled:
+          type: boolean
+        featuredImage:
+          $ref: '#/components/schemas/Image'
+        images:
+          type: array
+          items:
+            type: integer
+            format: int64
+        open_new_window:
+          type: boolean
+        position:
+          type: integer
+          format: int64
+        scheduledAt:
+          type: string
+        slug:
+          type: string
+        summary:
+          type: string
+        tags:
+          type: array
+          items:
+            type: integer
+            format: int64
+        title:
+          type: string
+        updatedAt:
+          type: string
+          format: date-time
+        user:
+          type: integer
+          format: int64
+    ArticleMeta:
+      title: ArticleMeta
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        metaKey:
+          type: string
+        metaValue:
+          type: string
+    InfoRequest:
+      title: InfoRequest
+      type: object
+      properties:
+        bs:
+          type: string
+        catchPhrase:
+          type: string
+        city:
+          type: string
+        companyName:
+          type: string
+        lat:
+          type: string
+        lng:
+          type: string
+        phone:
+          type: string
+        street:
+          type: string
+        suite:
+          type: string
+        website:
+          type: string
+        zipcode:
+          type: string
+    ResetPasswordRequest:
+      title: ResetPasswordRequest
+      type: object
+      properties:
+        confPass:
+          type: string
+        pass:
+          type: string
+        token:
+          type: string
+    PagedResponse«Article»:
+      title: PagedResponse«Article»
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/Article'
+        last:
+          type: boolean
+        page:
+          type: integer
+          format: int32
+        size:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int32
+    ImageUpdate:
+      title: ImageUpdate
+      type: object
+      properties:
+        alt:
+          type: string
+        description:
+          type: string
+    ArticlePositionDto:
+      title: ArticlePositionDto
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        position:
+          type: integer
+          format: int64
+    Reaction:
+      title: Reaction
+      type: object
+      properties:
+        createdAt:
+          type: string
+          format: date-time
+        createdBy:
+          type: integer
+          format: int64
+        id:
+          type: integer
+          format: int64
+        reaction:
+          type: string
+        updatedAt:
+          type: string
+          format: date-time
+        updatedBy:
+          type: integer
+          format: int64
+        user:
+          type: object
+          properties: {}
+    CategoryDto:
+      title: CategoryDto
+      type: object
+      properties:
+        articles:
+          type: array
+          items:
+            type: integer
+            format: int64
+        name:
+          type: string
+        parent:
+          type: integer
+          format: int64
+        subCategories:
+          type: array
+          items:
+            type: integer
+            format: int64
+    Geo:
+      title: Geo
+      type: object
+      properties:
+        lat:
+          type: string
+        lng:
+          type: string
+    Role:
+      title: Role
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+          enum:
+          - ROLE_ADMIN
+          - ROLE_USER
+    SignUpRequest:
+      title: SignUpRequest
+      type: object
+      properties:
+        email:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        password:
+          type: string
+        username:
+          type: string
+    SiteConf:
+      title: SiteConf
+      type: object
+      properties:
+        key:
+          type: string
+        value:
+          type: string
+    Tag:
+      title: Tag
+      type: object
+      properties:
+        createdAt:
+          type: string
+          format: date-time
+        id:
+          type: integer
+          format: int64
+        tag:
+          type: string
+        updatedAt:
+          type: string
+          format: date-time
+    PagedResponse«Tag»:
+      title: PagedResponse«Tag»
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tag'
+        last:
+          type: boolean
+        page:
+          type: integer
+          format: int32
+        size:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int32
+

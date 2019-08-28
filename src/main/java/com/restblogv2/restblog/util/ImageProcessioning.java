@@ -41,14 +41,17 @@ public class ImageProcessioning extends FileStorage implements ImageProcessingPr
         String storeagePath = storeFile(temp, newPath).replace("\\original", "");
         for( String path : ImageProcessingProperties.IMAGE_PATHS){
 
-            if(path.equals("thumbnail")){
-                bufferedImage = Scalr.resize(bufferedImage, Scalr.Mode.AUTOMATIC, ImageProcessingProperties.THUMBNAIL_WIDTH, ImageProcessingProperties.THUMBNAIL_WIDTH);
+            if(path.equals("medium")){
+
+                bufferedImage = Scalr.resize(bufferedImage, Scalr.Method.ULTRA_QUALITY,
+                        Scalr.Mode.FIT_TO_WIDTH, ImageProcessingProperties.MEDIUM_SIZE, ImageProcessingProperties.MEDIUM_SIZE, Scalr.OP_ANTIALIAS);
                 temp = new MockMultipartFile(file.getName(), file.getOriginalFilename(), file.getContentType(), addImageWatermark(WATER_MARK_File, bufferedImage, formatType).toByteArray());
                 newPath = childPath + "/" + path;
                 storeFile(temp, newPath);
             }
-            else if(path.equals("medium")){
-                bufferedImage = Scalr.resize(bufferedImage, Scalr.Mode.AUTOMATIC, ImageProcessingProperties.MEDIUM_WIDTH, ImageProcessingProperties.MEDIUM_WIDTH);
+            else if(path.equals("thumbnail")){
+                bufferedImage = Scalr.resize(bufferedImage, Scalr.Method.ULTRA_QUALITY,
+                        Scalr.Mode.FIT_TO_WIDTH, ImageProcessingProperties.THUMBNAIL_SIZE, ImageProcessingProperties.THUMBNAIL_SIZE, Scalr.OP_ANTIALIAS);
                 temp = new MockMultipartFile(file.getName(), file.getOriginalFilename(), file.getContentType(), addImageWatermark(WATER_MARK_File, bufferedImage, formatType).toByteArray());
                 newPath = childPath + "/" + path;
                 storeFile(temp, newPath);

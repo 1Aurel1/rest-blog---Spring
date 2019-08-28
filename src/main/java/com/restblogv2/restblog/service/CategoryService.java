@@ -55,12 +55,15 @@ public class CategoryService {
             newCategory.setParent(categoryRepository.findById(categoryDto.getParent()).orElseThrow(() -> new ResourceNotFoundException("Category", "id", 1L)));
         }
 
+        newCategory = categoryRepository.save(newCategory);
+
         if (categoryDto.getArticles() != null ){
             List<Article> articles = articleRepository.findAllById(categoryDto.getArticles());
-            newCategory.setArticles(articles);
+            for (Article article : articles){
+                article.setCategory(newCategory);
+            }
+            articleRepository.saveAll(articles);
         }
-
-        newCategory = categoryRepository.save(newCategory);
 
         return new ResponseEntity<>(newCategory, HttpStatus.CREATED);
     }
@@ -87,7 +90,7 @@ public class CategoryService {
                 category.setParent(categoryRepository.findById(updatedCategory.getParent()).orElseThrow(() -> new ResourceNotFoundException("Category", "id", 1L)));
             }
             if (updatedCategory.getArticles() != null ){
-                List<Article> articles = articleRepository.findArticlesById(updatedCategory.getArticles());
+                List<Article> articles = articleRepository.findAllById(updatedCategory.getArticles());
                 for (Article article : articles){
                     article.setCategory(category);
                 }
